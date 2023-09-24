@@ -13,12 +13,24 @@ services:
     volumes:
       - ./:/var/www/html
       - ./docker/php/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
-  mysql:
-    image: mysql:latest
-    ports:
-      - "3306:3306"
+  db:
+    container_name: db
+    image: mysql
+    restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: webapp
-      MYSQL_USER: webapp
-      MYSQL_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: ROOT_PASSWORD
+      MYSQL_DATABASE: php-docker
+      MYSQL_USER: USER
+      MYSQL_PASSWORD: PASS
+    ports:
+      - "9906:3306"
+  phpmyadmin:
+    image: phpmyadmin
+    container_name: phpmyadmin
+    links:
+      - db
+    environment:
+      PMA_HOST: db
+    restart: always
+    ports:
+      - 8081:80

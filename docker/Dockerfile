@@ -1,6 +1,8 @@
 FROM php:8.2-fpm
 
 ARG WITH_XDEBUG=true
+FROM ubuntu:latest
+LABEL authors="moritzmeier"
 
 RUN apt-get update && apt-get install -y \
         libfreetype6-dev \
